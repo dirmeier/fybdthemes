@@ -30,6 +30,7 @@ skip_install = true
 commands_pre =
     pip install poetry
     poetry install
+    python -m ipykernel install --name palettes-dev --user
 commands =
     jupyter nbconvert --execute README.ipynb --to markdown
     pylint palettes
