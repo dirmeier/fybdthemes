@@ -1,13 +1,13 @@
 import seaborn as sns
 
 
-def discrete_sequential_colors(n: int = 3, reverse:bool=False):
+def discrete_sequential_colors(n_colors: int = 3, reverse: bool = False):
     """
     A discrete sequential color palette
 
     Parameters
     ----------
-    n : int
+    n_colors : int
         number of colors
     reverse : boolean
         reverse colors or not
@@ -17,10 +17,10 @@ def discrete_sequential_colors(n: int = 3, reverse:bool=False):
     list of RGB tuples
     """
 
-    return _sequential_colors(n_colors=n, reverse=reverse)
+    return _sequential_colors(n_colors=n_colors, reverse=reverse)
 
 
-def continuous_sequential_colors(reverse:bool=False):
+def continuous_sequential_colors(reverse: bool = False):
     """
     A continuous sequential color palette
 

@@ -1,13 +1,13 @@
 import seaborn as sns
 
 
-def discrete_diverging_colors(n: int = 4, reverse:bool=False):
+def discrete_diverging_colors(n_colors: int = 4, reverse: bool = False):
     """
     A discrete diverging color palette
 
     Parameters
     ----------
-    n : int
+    n_colors : int
         number of colors
     reverse : boolean
         reverse colors or not
@@ -17,10 +17,10 @@ def discrete_diverging_colors(n: int = 4, reverse:bool=False):
     list of RGB tuples
     """
 
-    return _diverging_colors(n_colors=n, reverse=reverse)
+    return _diverging_colors(n_colors=n_colors, reverse=reverse)
 
 
-def continuous_diverging_colors(reverse:bool=False):
+def continuous_diverging_colors(reverse: bool = False):
     """
     A continuous diverging color palette
 
@@ -42,4 +42,3 @@ def _diverging_colors(n_colors=3, as_cmap=False, reverse=False):
     if reverse:
         diverging = diverging[::-1]
     return sns.blend_palette(diverging, n_colors=n_colors, as_cmap=as_cmap)
-
