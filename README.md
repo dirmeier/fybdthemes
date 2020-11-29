@@ -12,7 +12,7 @@ This package contains some of my color palettes for usage in Python. One can cho
 To install the latest GitHub release, just call the following on the command line:
 
 ```bash
-pip install git+https://github.com/dirmeier/palettes
+pip install git+https://github.com/dirmeier/palettes@v0.1.0
 ```
 
 ## Usage
@@ -22,6 +22,8 @@ pip install git+https://github.com/dirmeier/palettes
 
 ```python
 import numpy as np
+import numpy.random
+
 %matplotlib inline
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -112,25 +114,23 @@ In a plot, we use the color scheme like this:
 
 
 ```python
-f, ax = plt.subplots(figsize=(8, 4))
+_, ax = plt.subplots(figsize=(8, 4))
 sns.scatterplot(
     x="carat", y="price",
     hue="price",
     palette=palettes.continuous_sequential_colors(),
-    data=diamonds, ax=ax
-);
+    data=diamonds, ax=ax,
+    marker="+"
+)
+ax.set_xlabel(r'$x$')
+ax.set_ylabel(r'$f(x)$')
+ax.legend(title="lines", bbox_to_anchor=(1.2, 0.5))
+plt.show()
 ```
 
 
-
-
-    <AxesSubplot:xlabel='carat', ylabel='price'>
-
-
-
-
     
-![png](README_files/README_18_1.png)
+![png](README_files/README_18_0.png)
     
 
 
@@ -188,31 +188,29 @@ For plotting, we use the palette as before. In this case the midpoint would be i
 
 
 ```python
-f, ax = plt.subplots(figsize=(8, 4))
+_, ax = plt.subplots(figsize=(8, 4))
 sns.scatterplot(
     x="carat", y="price",
     hue="carat",
     palette=palettes.continuous_diverging_colors(),
-    data=diamonds, ax=ax
-);
+    data=diamonds, ax=ax,
+    marker="+"
+)
+ax.legend(title="lines", bbox_to_anchor=(1.2, 0.5))
+ax.set_xlabel(r'$x$')
+ax.set_ylabel(r'$f(x)$')
+plt.show()
 ```
 
 
-
-
-    <AxesSubplot:xlabel='carat', ylabel='price'>
-
-
-
-
     
-![png](README_files/README_26_1.png)
+![png](README_files/README_26_0.png)
     
 
 
 ### Qualitative colors 
 
-Qualitative colors are usually chosen for categorical variables. The qualitative colors palette has the following colors:
+Qualitative colors are usually chosen for categorical variables. The qualitative colors palette in this package has the following colors:
 
 
 ```python
@@ -228,9 +226,157 @@ plot_palette(palettes.discrete_qualitative_colors())
 
 
 
-The palette has a maximum of 6 colors. I've chosen to use only 6, because humans are usually not good at congitively processing 4-5 colors in a plot, so 6 is a hard maximum. 
 
-For qualitative variables with more than 6 levels, I usually prefer to plot the with in a light blue sequential scale, since one cannot distinguish the colors effectively any more anyways. Alternatively one can use a greyscale for the variables, and highlight some few with colors.
+```python
+def sqeuclidean_cdist(X):
+    X = X.reshape(-1, 1)    
+    X2 = np.sum(np.square(X), 1)    
+    dist = -2.0 * np.dot(X, np.transpose(X)) + (
+        np.reshape(X2, (-1, 1)) + np.reshape(X2, (1, -1))
+    )
+    return  np.exp(-0.5 * np.clip(dist, 0.0, np.inf))
+
+X = np.linspace(0, 10, 100)
+K = sqeuclidean_cdist(X)
+```
+
+You can, for instance, use it like this:
+
+
+```python
+cols = palettes.discrete_qualitative_colors()
+
+_, ax = plt.subplots(figsize=(8, 4))
+for i in range(5):
+    f = numpy.random.multivariate_normal(np.zeros(X.shape[0]), K) 
+    plt.plot(X, f, color=cols[i], linewidth=2, label=i)
+ax.legend(title="lines", bbox_to_anchor=(1.2, 0.5))
+ax.set_xlabel(r'$x$')
+ax.set_ylabel(r'$f(x)$')
+plt.show()
+```
+
+
+    
+![png](README_files/README_31_0.png)
+    
+
+
+If you need less colors, manually specificying the colors to avoid a too colorful figure is usually a good idea. For instance, for plots with three lines you could use these colors:
+
+
+```python
+plot_palette(np.array(cols)[[0, 1, 3]])
+```
+
+
+
+
+    
+![png](README_files/README_33_0.png)
+    
+
+
+
+
+```python
+plot_palette(np.array(cols)[[0, 1, 4]])
+```
+
+
+
+
+    
+![png](README_files/README_34_0.png)
+    
+
+
+
+In that case we merely need to specify the indexes of the colors:
+
+
+```python
+idxs = 0, 1, 4
+_, ax = plt.subplots(figsize=(8, 4))
+for i in idxs:
+    f = numpy.random.multivariate_normal(np.zeros(X.shape[0]), K) 
+    plt.plot(X, f, color=cols[i], linewidth=2, label=i)
+ax.legend(title="lines", bbox_to_anchor=(1.2, 0.5))
+ax.set_xlabel(r'$x$')
+ax.set_ylabel(r'$f(x)$')
+plt.show()
+```
+
+
+    
+![png](README_files/README_36_0.png)
+    
+
+
+The palette has a maximum of 6 colors. I've chosen to use only 6, because humans are usually not good at congitively processing more then 4-5 colors in a plot, so 6 is a hard maximum. 
+
+For qualitative variables with more than 6 levels, I usually prefer a light/transarent blue sequential scale, since one cannot distinguish the colors effectively any more anyways. Alternatively one can use a greyscale for the variables, and highlight some few with colors. 
+
+See the plot below as an example of a blue sequential scale. Note that in the plot below, we don't use a legend, cause we don't want to emphasize/highlight the separate lines, but rather show the general trend.
+
+
+```python
+cols = palettes.discrete_sequential_colors(5)
+
+_, ax = plt.subplots(figsize=(8, 4))
+for i in range(5):
+    f = numpy.random.multivariate_normal(np.zeros(X.shape[0]), K) 
+    plt.plot(X, f, color=cols[i], linewidth=2, alpha=.65)
+ax.set_xlabel(r'$x$')
+ax.set_ylabel(r'$f(x)$')
+plt.show()
+```
+
+
+    
+![png](README_files/README_39_0.png)
+    
+
+
+A grey color scale to do the same as above can be created from seaborn:
+
+
+```python
+plot_palette(sns.color_palette("light:black", as_cmap=False))
+```
+
+
+
+
+    
+![png](README_files/README_41_0.png)
+    
+
+
+
+If we want to put emphasis on a *single* line, we plot all *other* lines, for instance, in grey, and highlight the one we are interest in afterwards.
+
+
+```python
+cols = sns.color_palette("light:black", as_cmap=False, n_colors=9)
+highlight_color = palettes.discrete_sequential_colors(3)[1]
+
+_, ax = plt.subplots(figsize=(8, 4))
+for i in range(9):
+    f = numpy.random.multivariate_normal(np.zeros(X.shape[0]), K) 
+    plt.plot(X, f, color=cols[i], linewidth=1, alpha=.65)
+f = numpy.random.multivariate_normal(np.zeros(X.shape[0]), K) 
+plt.plot(X, f, color=highlight_color, linewidth=2)
+ax.set_xlabel(r'$x$')
+ax.set_ylabel(r'$f(x)$')
+plt.show()
+```
+
+
+    
+![png](README_files/README_43_0.png)
+    
+
 
 ## Author
 
