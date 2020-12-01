@@ -12,7 +12,7 @@ This package contains some of my color palettes for usage in Python. One can cho
 To install the latest GitHub release, just call the following on the command line:
 
 ```bash
-pip install git+https://github.com/dirmeier/palettes@v0.1.0
+pip install git+https://github.com/dirmeier/palettes@v0.1.1
 ```
 
 ## Usage

@@ -38,7 +38,7 @@ def continuous_sequential_colors(reverse: bool = False):
 
 
 def _sequential_colors(n_colors=3, as_cmap=False, reverse=False):
-    sequential = ["#61829CFF", "#004787", "#252525"]
+    sequential = ["#61829CFF", "#004B87", "#252525"]
     if reverse:
         sequential = sequential[::-1]
     return sns.blend_palette(sequential, as_cmap=as_cmap, n_colors=n_colors)
