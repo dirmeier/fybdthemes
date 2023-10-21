@@ -38,10 +38,7 @@ def continuous_diverging_colors(reverse: bool = False):
 
 
 def _diverging_colors(n_colors=3, as_cmap=False, reverse=False):
-    diverging = ["#233B43",
-                 "#004B87",
-                 "#B04A5A",
-                 "#532026FF"]
+    diverging = ["#233B43", "#004B87", "#B04A5A", "#532026FF"]
     if reverse:
         diverging = diverging[::-1]
     return sns.blend_palette(diverging, n_colors=n_colors, as_cmap=as_cmap)

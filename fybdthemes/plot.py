@@ -1,6 +1,6 @@
-import numpy as np
 import matplotlib.colors
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def plot_palette(palette):
