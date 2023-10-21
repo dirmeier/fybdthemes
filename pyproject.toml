@@ -1,48 +1,55 @@
-[tool.poetry]
-name = "palettes"
-version = "0.1.1"
-description = "Color palettes for Python"
-authors = ["Simon Dirmeier <simon.dirmeier@web.de>"]
-
-[tool.poetry.dependencies]
-python = "^3.8"
-matplotlib = "^3.3.3"
-seaborn = "^0.11.0"
-numpy = "^1.19.4"
-
-[tool.poetry.dev-dependencies]
-tox = "^3.20.1"
-jupyter = "^1.0.0"
-pylint = "^2.6.0"
-black = "^20.8b1"
-
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-[tool.tox]
-legacy_tox_ini = """
-[tox]
-envlist = py38
+[project]
+name = "fybdthemes"
+description = "Color palettes and plot themes"
+authors = [{name = "Simon Dirmeier", email = "sfyrbnd@pm.me"}]
+readme = "README.md"
+license = "Apache-2.0"
+homepage = "https://github.com/dirmeier/fybdthemes"
+keywords = ["color palettes", "themes"]
+classifiers=[
+    "Development Status :: 1 - Planning",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+requires-python = ">=3.9"
+dependencies = [
+    "matplotlib>=3.3.3",
+    "seaborn>=0.11.0",
+    "numpy>=1.19.4",
+    "palettable>=3.3.3"
+]
+dynamic = ["version"]
 
-[testenv]
-skip_install = true
-commands_pre =
-    pip install poetry
-    poetry install
-    python -m ipykernel install --name palettes-dev --user
-commands =
-    jupyter nbconvert --execute README.ipynb --to markdown
-    pylint palettes
-"""
+[project.urls]
+Homepage = "https://github.com/dirmeier/fybdthemes"
 
-[tool.pylint.'MESSAGES CONTROL']
-max-line-length = "80"
-disable = "missing-module-docstring"
+[tool.hatch.version]
+path = "fybdthemes/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+    "/.github",
+    "./gitignore",
+    "/.pre-commit-config.yaml"
+]
+
+
+[tool.hatch.envs.test.scripts]
+lint = 'pylint fybdthemes'
+test = 'pytest -v --cov=./fybdthemes --cov-report=xml fybdthemes'
 
 [tool.black]
 line-length = 80
-target-version = ['py37', 'py38']
+extend-ignore = "E203"
+target-version = ['py39']
 exclude = '''
 /(
     \.eggs
@@ -57,3 +64,27 @@ exclude = '''
   | dist
 )/
 '''
+
+[tool.isort]
+profile = "black"
+line_length = 80
+include_trailing_comma = true
+
+[tool.flake8]
+max-line-length = 80
+extend-ignore = ["E203", "W503"]
+per-file-ignores = [
+    '__init__.py:F401',
+]
+
+[tool.pylint.messages_control]
+disable = """
+invalid-name,missing-module-docstring,R0801
+"""
+
+[tool.bandit]
+skips = ["B101"]
+
+[tool.pydocstyle]
+convention= 'google'
+match = '^fybdthemes/.*/((?!_test).)*\.py'

@@ -1,7 +1,8 @@
-# palettes
+# fybdthemes
 
 [![Project Status](http://www.repostatus.org/badges/latest/concept.svg)](http://www.repostatus.org/#concept)
-[![ci](https://github.com/dirmeier/palettes/workflows/ci/badge.svg)](https://github.com/dirmeier/palettes/actions?query=workflow%3Aci)
+[![ci](https://github.com/dirmeier/fybdthemes/workflows/ci/badge.svg)](https://github.com/dirmeier/fybdthemes/actions?query=workflow%3Aci)
+[![version](https://img.shields.io/pypi/v/fybdthemes.svg?colorB=black&style=flat)](https://pypi.org/project/fybdthemes/)
 
 ## About 
  
@@ -9,15 +10,21 @@ This package contains some of my color palettes for usage in Python. One can cho
 
 ## Installation
 
-To install the latest GitHub release, just call the following on the command line:
+To install from PyPI:
 
 ```bash
-pip install git+https://github.com/dirmeier/palettes@v0.1.1
+pip install fybdthemes
+```
+
+To install the latest GitHub <RELEASE>, just call the following on the command line:
+
+```bash
+pip install git+https://github.com/dirmeier/fybdthemes@<RELEASE>
 ```
 
 ## Usage
 
-`palettes` works with both `matplotlib` or `seaborn`. You can either manually specify colors or provide matplotlib color maps. Below, we briefly demonstrate how to use the package.
+`fybdthemes` works with both `matplotlib` or `seaborn`. You can either manually specify colors or provide matplotlib color maps. Below, we briefly demonstrate how to use the package.
 
 
 ```python
@@ -28,15 +35,15 @@ import numpy.random
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-import palettes
-from palettes.plot import plot_palette
+import fybdthemes
+from fybdthemes.plot import plot_palette
 ```
 
 Set a custom theme for matplotlib:
 
 
 ```python
-palettes.set_theme()
+fybdthemes.set_theme()
 ```
 
 For visualization we use the well-known diamonds data:
@@ -52,7 +59,7 @@ Sequential colors are usually chosen for continuous variables. The sequential co
 
 
 ```python
-plot_palette(palettes.discrete_sequential_colors())
+plot_palette(fybdthemes.discrete_sequential_colors())
 ```
 
 
@@ -68,7 +75,7 @@ In the visualization above we use three discrete colors, but you can also choose
 
 
 ```python
-plot_palette(palettes.discrete_sequential_colors(10))
+plot_palette(fybdthemes.discrete_sequential_colors(10))
 ```
 
 
@@ -82,7 +89,7 @@ plot_palette(palettes.discrete_sequential_colors(10))
 
 
 ```python
-plot_palette(palettes.discrete_sequential_colors(10, True))
+plot_palette(fybdthemes.discrete_sequential_colors(10, True))
 ```
 
 
@@ -98,7 +105,7 @@ Usually for continuous variables, we want a continous scale though:
 
 
 ```python
-plot_palette(palettes.continuous_sequential_colors())
+plot_palette(fybdthemes.continuous_sequential_colors())
 ```
 
 
@@ -118,7 +125,7 @@ _, ax = plt.subplots(figsize=(8, 4))
 sns.scatterplot(
     x="carat", y="price",
     hue="price",
-    palette=palettes.continuous_sequential_colors(),
+    palette=fybdthemes.continuous_sequential_colors(),
     data=diamonds, ax=ax,
     marker="+"
 )
@@ -140,7 +147,7 @@ Diverging colors are usually chosen for continuous variables that can deviate in
 
 
 ```python
-plot_palette(palettes.discrete_diverging_colors())
+plot_palette(fybdthemes.discrete_diverging_colors())
 ```
 
 
@@ -156,7 +163,7 @@ As above, you can specify more colors, too, and reverse them:
 
 
 ```python
-plot_palette(palettes.discrete_diverging_colors(10, True))
+plot_palette(fybdthemes.discrete_diverging_colors(10, True))
 ```
 
 
@@ -172,7 +179,7 @@ Since the visualized variable is usually continuous again, you want a continous 
 
 
 ```python
-plot_palette(palettes.continuous_diverging_colors())
+plot_palette(fybdthemes.continuous_diverging_colors())
 ```
 
 
@@ -192,7 +199,7 @@ _, ax = plt.subplots(figsize=(8, 4))
 sns.scatterplot(
     x="carat", y="price",
     hue="carat",
-    palette=palettes.continuous_diverging_colors(),
+    palette=fybdthemes.continuous_diverging_colors(),
     data=diamonds, ax=ax,
     marker="+"
 )
@@ -214,7 +221,7 @@ Qualitative colors are usually chosen for categorical variables. The qualitative
 
 
 ```python
-plot_palette(palettes.discrete_qualitative_colors())
+plot_palette(fybdthemes.discrete_qualitative_colors())
 ```
 
 
@@ -244,7 +251,7 @@ You can, for instance, use it like this:
 
 
 ```python
-cols = palettes.discrete_qualitative_colors()
+cols = fybdthemes.discrete_qualitative_colors()
 
 _, ax = plt.subplots(figsize=(8, 4))
 for i in range(5):
@@ -321,7 +328,7 @@ See the plot below as an example of a blue sequential scale. Note that in the pl
 
 
 ```python
-cols = palettes.discrete_sequential_colors(5)
+cols = fybdthemes.discrete_sequential_colors(5)
 
 _, ax = plt.subplots(figsize=(8, 4))
 for i in range(5):
@@ -359,7 +366,7 @@ If we want to put emphasis on a *single* line, we plot all *other* lines, for in
 
 ```python
 cols = sns.color_palette("light:black", as_cmap=False, n_colors=9)
-highlight_color = palettes.discrete_sequential_colors(3)[1]
+highlight_color = fybdthemes.discrete_sequential_colors(3)[1]
 
 _, ax = plt.subplots(figsize=(8, 4))
 for i in range(9):
@@ -380,4 +387,4 @@ plt.show()
 
 ## Author
 
-Simon Dirmeier <a href="mailto:simon.dirmeier @ web.de">simon.dirmeier @ web.de</a>
+Simon Dirmeier <a href="mailto:sfyrbnd @ pm me">sfyrbnd @ pm me</a>
