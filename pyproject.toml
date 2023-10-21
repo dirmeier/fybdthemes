@@ -44,7 +44,6 @@ exclude = [
 
 [tool.hatch.envs.test.scripts]
 lint = 'pylint fybdthemes'
-test = 'pytest -v --cov=./fybdthemes --cov-report=xml fybdthemes'
 
 [tool.black]
 line-length = 80
